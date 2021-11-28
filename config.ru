@@ -8,7 +8,11 @@ require 'action_controller/railtie'
 require 'puma'
 
 class RailsFromScratch < Rails::Application
+  # setup logging to STDOUT
   config.logger = Logger.new($stdout)
+
+  # serve static assets from /public
+  config.public_file_server.enabled = true
 
   routes.append do
     get '/', controller: 'guests', action: :landing_page
@@ -17,6 +21,7 @@ end
 
 class GuestsController < ActionController::Base
   LANDING_PAGE_TEMPLATE = ::DATA.read
+
   def landing_page
     render inline: LANDING_PAGE_TEMPLATE
   end
@@ -34,6 +39,7 @@ __END__
 <head>
   <meta charset="UTF-8">
   <title></title>
+  <link rel="stylesheet" href="<%= stylesheet_path('application.css') %>">
 </head>
 <body>
   <h1>Hello!</h1>
