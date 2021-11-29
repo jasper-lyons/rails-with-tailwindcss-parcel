@@ -3,3 +3,4 @@ tmp
 .parcel-cache
 public/stylesheets
 node_modules
+db/*.sqlite3
